@@ -1,0 +1,21 @@
+
+<!DOCTYPE html>
+<html lang="es">
+    <head>
+        <meta charset="UTF-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <title>Ejercicio Objetos Navegador</title>
+    </head>
+    <body onload="info()">
+        <script>
+            function info(){
+                // mostrando el nombre del navegador utilizado
+                alert(navigator.appName + " Version: " + navigator.appVersion + " Codigo: " + navigator.appCodeName);
+                // mostrando la resolucion de pantalla
+                alert(screen.availHeight + "x" + screen.availWidth +"\n" + screen.height + "x" + screen.width);
+                // mostrando la url y si estan habilitadas las cookies
+                alert(location.pathname + "\n" + navigator.cookieEnabled);
+            }
+        </script>
+    </body>
+</html>
