@@ -1,0 +1,52 @@
+<!DOCTYPE html>
+<html lang="es">
+    <head>
+        <meta charset="UTF-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <title>Ejercicio Ajax Pokemon</title>
+    </head>
+    <body>
+        <label>Introduce nombre de pokemon:</label>
+        <input type="text" id="nombre" name="nombre" onblur="buscar()"/>
+
+        <div id="resultado"></div>
+        <script>
+            // Variable global para el objeto XMLHttpRequest
+            var xhr;
+
+            function buscar(){
+                // Obtener el objeto del navegador
+                xhr = new XMLHttpRequest();
+
+                // Preparar la peticion asincrona, por eso lleva el valor true
+                xhr.open("GET","https://pokeapi.co/api/v2/pokemon/" + nombre.value,true);
+
+                // Cabecera para recivir datos en Json
+                xhr.setRequestHeader("accept","application/json");
+
+                // Informar de la funcion que procesara la respuesta
+                xhr.onreadystatechange = procesar; // OJO SIN PARENTESIS
+
+                // enviar
+                xhr.send();
+            }
+
+            function procesar(){
+                // limitar el procesado cuando el estado este en nivel 4
+                // que es cuando se han recivido todos los datos solicitados
+                if (xhr.readyState == 4){
+                    var datos = JSON.parse(xhr.responseText);
+                    console.log(datos);
+
+                    var habilidades = datos.abilities;
+                    document.getElementById("resultado").innerText = "Habilidades: ";
+
+                    for(var i in habilidades){
+                        document.getElementById("resultado").innerHTML += "<br/>" + habilidades[i].ability.name;
+                    }
+                }
+            }
+
+        </script>
+    </body>
+</html>
