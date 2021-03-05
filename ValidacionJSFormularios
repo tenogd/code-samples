@@ -1,0 +1,18 @@
+function validar(event){
+    if(/^[A-Z][a-z]{3,20}$/.test(formulario.idNombre.value)){
+        document.getElementById("resultado").innerText = null;
+    }else{
+        document.getElementById("resultado").innerText = "Nombre incorrecto debe tener entre 3 y 20 caracteres y comenzar en mayuscula";
+        //cancelar el submit
+        event.preventDefault();
+    }
+}
+
+function cargar(){
+    var array = new Array("Técnico","Profesional","Junior");
+
+    for (var indice in array) {
+        var opcion = new Option(array[indice],indice);
+        document.getElementById("categoria").options[indice] = opcion;
+    }
+}
