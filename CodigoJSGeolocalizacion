@@ -1,0 +1,43 @@
+var mapa;
+
+function mostrar_mapa(){
+    // Comprobar si el navegador soporta geolocalizacion
+    if(navigator.geolocation){
+        navigator.geolocation.getCurrentPosition(mostrarLocalizacion,manejarError);
+    }else{
+        alert("Tu navegador no soporta Geolocalizacion")
+    }
+    // variable con un objeto JSON
+    var opciones = {
+        zoom:12,
+        mapTypeId: google.maps.MapTypeId.ROADMAP
+    };
+    mapa = new google.maps.Map(document.getElementById("seccion_mapa"), opciones);
+}
+
+function mostrarLocalizacion(posicion){
+    var pos = new google.maps.LatLng(posicion.coords.latitude, posicion.coords.longitude);
+    // Mostrar la ubicacion en le mapa
+    var infowindow = new google.maps.InfoWindow(
+        {map: mapa, position: pos, content: "Estas aqui"}
+    );
+    mapa.setCenter(pos);
+}
+
+
+function manejarError(error){
+    switch (error.code) {
+        case error.PERMISSION_DENIED:
+            alert("No tienes permiso de usuario")
+            break;
+        case error.POSITION_UNAVAILABLE:
+            alert("No se puede detectar la ubicacion")
+            break;
+        case error.TIMEOUT:
+                alert("Tiempo de espera agotado")
+                break;
+        case error.UNKNOWN_ERROR:
+                alert("Error desconcido")
+                break;
+    }
+}
