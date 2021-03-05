@@ -1,0 +1,143 @@
+package com.exercice.web;
+
+import java.io.IOException;
+import java.util.List;
+
+import javax.servlet.RequestDispatcher;
+import javax.servlet.ServletException;
+import javax.servlet.annotation.WebServlet;
+import javax.servlet.http.HttpServlet;
+import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
+
+import com.exercice.business.AgendaBS;
+import com.exercice.models.Contacto;
+
+/**
+ * 
+ * Servlet implementation class ProductosServlet
+ */
+@WebServlet("/AgendaServlet")
+public class AgendaServlet extends HttpServlet {
+	private static final long serialVersionUID = 1L;
+       
+    /**
+     * @see HttpServlet#HttpServlet()
+     */
+    public AgendaServlet() {
+        super();
+        // TODO Auto-generated constructor stub
+    }
+
+	/**
+	 * @see HttpServlet#doGet(HttpServletRequest request, HttpServletResponse response)
+	 */
+	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+		
+		// recuperamos el valor de op para ver que se solicita
+		String opcion = request.getParameter("op");
+		
+		// creamos un objeto desde AgendaBS
+		AgendaBS agendasBS = new AgendaBS();
+		
+		// creamos una variable tipo String
+		String vista = "/index.html";
+		
+		// creamos una condicional para ver que datos hay que solicitar
+		switch (opcion) {
+		
+		case "1":
+			
+			// Mostrar todos los contactos
+			List<Contacto> lista = agendasBS.mostrarTodos();
+			
+			// guardamos la lista de contactos como un atributo de peticion
+			request.setAttribute("agenda", lista);
+			
+			// elegimos la vista que mostrara el resultado
+			vista = "/mostrarAgenda.jsp";
+			
+			break;
+			
+		case "2":
+			
+			lista = agendasBS.buscar(request.getParameter("nombre"));
+		
+			// guardamos el contacto como un atributo de peticion
+			request.setAttribute("agenda", lista );
+			
+			// elegimos la vista que mostrara el resultado
+			vista = "/mostrarPorNombre.jsp";
+			
+			break;
+		
+		case "3":
+			
+			// enviamos la informacion para agregar
+			agendasBS.agregar(new Contacto( request.getParameter("nombre"), request.getParameter("telefono"), request.getParameter("email")));
+			
+			// creamos un objeto con el mensaje que vamos a mostrar en la vista
+			request.setAttribute("msg", "Contacto aÒadido a la BBDD");
+			
+			// elegimos la vista que mostrara el resultado
+			vista = "/mostrarMensaje.jsp";
+			
+			break;
+			
+		case "4":
+
+			// Eliminar un contacto por ID
+			agendasBS.eliminar(Integer.parseInt(request.getParameter("codigo")));
+			
+			// creamos un objeto con el mensaje que vamos a mostrar en la vista
+			request.setAttribute("msg", "Contacto eliminado de la BBDD");
+						
+			// elegimos la vista que mostrara el resultado
+			vista = "/mostrarMensaje.jsp";			
+			
+			break;
+			
+		case "5":
+			
+			// modificar eltelefono de un contacto
+			agendasBS.cambiarTelefono(Integer.parseInt(request.getParameter("codigo")), request.getParameter("telefono"));
+			
+			// creamos un objeto con el mensaje que vamos a mostrar en la vista
+			request.setAttribute("msg", "Telefono modificado en la BBDD");
+									
+			// elegimos la vista que mostrara el resultado
+			vista = "/mostrarMensaje.jsp";				
+			
+			break;
+
+		case "6":
+			
+			// modificar el email de un contacto
+			agendasBS.cambiarEmail(Integer.parseInt(request.getParameter("codigo")), request.getParameter("email"));
+			
+			// creamos un objeto con el mensaje que vamos a mostrar en la vista
+			request.setAttribute("msg", "E-mail modificado en la BBDD");
+									
+			// elegimos la vista que mostrara el resultado
+			vista = "/mostrarMensaje.jsp";				
+			
+			break;
+		}
+		
+		// elegimos la vista que mostrara el resultado (segun lo elegido)
+		RequestDispatcher rd = request.getRequestDispatcher(vista);
+		
+		// pasa la informacion para que continue la vista elegida
+		rd.forward(request, response);
+		
+	}
+
+	/**
+	 * @see HttpServlet#doPost(HttpServletRequest request, HttpServletResponse response)
+	 */
+	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+		// TODO Auto-generated method stub
+		doGet(request, response);
+	}
+
+}
