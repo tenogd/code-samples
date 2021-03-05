@@ -1,0 +1,53 @@
+
+<!DOCTYPE html>
+<html lang="es">
+    <head>
+        <meta charset="UTF-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <title>Ejercicio Animaciones</title>
+        <style>
+            #recuadro1{
+                background-color: darksalmon;
+                width: 200px;
+                height: 100px;
+                font-size: 1em;               
+               position: relative;
+               animation-name: animacion1;
+               animation-duration: 10s;
+            }
+
+            @keyframes animacion1{
+                0%{
+                    background-color: darksalmon;
+                    width: 200px;
+                    font-size: 1em;
+                    left: 30px;
+                }
+                25%{
+                    background-color: darkolivegreen;
+                    width: 400px;
+                    font-size: 3em;
+                    top: 500px;
+                }
+                50%{
+                    background-color: darkorchid;
+                    width: 300px;
+                    font-size: 1em;
+                    left: 30px;
+                }
+                75%{
+                    background-color: deepskyblue;
+                    width: 400px;
+                    font-size: 6em;
+                    left: 500px;
+                }
+            }
+
+        </style>
+    </head>
+    <body>
+        <div id="recuadro1">
+            Animacion
+        </div>
+    </body>
+</html>
