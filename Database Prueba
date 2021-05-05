@@ -1,0 +1,40 @@
+CREATE DATABASE `prueba`;
+
+USE `prueba`;
+
+CREATE TABLE `direccion` (
+    `id_direccion` INT NOT NULL AUTO_INCREMENT PRIMARY KEY,
+    `calle` VARCHAR(45),
+    `numero` INT(8),
+    `pais` VARCHAR(45),
+    `poblacion` VARCHAR(45),
+    `provincia` VARCHAR(45),
+    `codigo_postal` INT
+);
+
+CREATE TABLE `empresa` (
+    `id_empresa` INT NOT NULL AUTO_INCREMENT PRIMARY KEY,
+    `cif` VARCHAR(8),
+    `nombre` VARCHAR(45),
+    `id_direccion` INT,
+    FOREIGN KEY (id_direccion)
+        REFERENCES direccion (id_direccion)
+);
+
+CREATE TABLE `tipo_empresa` (
+    `id_tipo` INT NOT NULL PRIMARY KEY,
+    `tipo` VARCHAR(9) UNIQUE CHECK (tipo IN (`propia` , `cliente`, `proveedor`))
+);
+
+insert into `tipo_empresa`()
+	values
+    (1,"propia"),(2,"cliente"),(3,"proveedor");
+
+CREATE TABLE `empresa_tipo_empresa` (
+    `id_tipo` INT,
+    FOREIGN KEY (`id_tipo`)
+        REFERENCES `tipo_empresa` (`id_tipo`),
+    `id_empresa` INT,
+    FOREIGN KEY (`id_empresa`)
+        REFERENCES `empresa` (`id_empresa`)
+);
